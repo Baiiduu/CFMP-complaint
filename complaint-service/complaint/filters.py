@@ -1,3 +1,4 @@
+
 import django_filters
 from django.utils import timezone
 from . import models
@@ -16,6 +17,39 @@ class ComplaintFilter(django_filters.FilterSet):
     class Meta:
         model = models.Complaint
         fields = ['complainer_id', 'target_type', 'target_id', 'status']
+
+    def filter_by_date_from(self, queryset, name, value):
+        """按起始日期过滤"""
+        if value:
+            start_datetime = timezone.make_aware(
+                timezone.datetime.combine(value, timezone.datetime.min.time())
+            )
+            return queryset.filter(created_at__gte=start_datetime)
+        return queryset
+
+    def filter_by_date_to(self, queryset, name, value):
+        """按结束日期过滤"""
+        if value:
+            end_datetime = timezone.make_aware(
+                timezone.datetime.combine(value, timezone.datetime.max.time())
+            )
+            return queryset.filter(created_at__lte=end_datetime)
+        return queryset
+
+class ComplaintReviewFilter(django_filters.FilterSet):
+    target_id = django_filters.NumberFilter(field_name='target_id')
+    target_type = django_filters.NumberFilter(field_name='target_type')
+    reviewer_id = django_filters.NumberFilter(field_name='reviewer_id')
+    result = django_filters.CharFilter(field_name='result', lookup_expr='icontains')
+    created_after = django_filters.DateTimeFilter(field_name='created_at', lookup_expr='gte')
+    created_before = django_filters.DateTimeFilter(field_name='created_at', lookup_expr='lte')
+    # 按日期范围过滤
+    date_from = django_filters.DateFilter(method='filter_by_date_from')
+    date_to = django_filters.DateFilter(method='filter_by_date_to')
+
+    class Meta:
+        model = models.ComplaintReview
+        fields = ['target_id', 'target_type', 'reviewer_id', 'result']
 
     def filter_by_date_from(self, queryset, name, value):
         """按起始日期过滤"""

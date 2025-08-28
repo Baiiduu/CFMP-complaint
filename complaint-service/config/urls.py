@@ -12,5 +12,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     # 可以添加自定义路径
-    path('api/complaints/stats/', views.ComplaintStatsView.as_view(), name='complaint-stats'),
+
 ]
