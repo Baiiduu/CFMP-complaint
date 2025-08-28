@@ -1,0 +1,16 @@
+from django.contrib import admin
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from complaint import views
+
+router = DefaultRouter()
+router.register(r'complaints', views.ComplaintViewSet)
+router.register(r'reviews', views.ComplaintReviewViewSet)
+router.register(r'transactions', views.TransactionViewSet)
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
+    # 可以添加自定义路径
+    path('api/complaints/stats/', views.ComplaintStatsView.as_view(), name='complaint-stats'),
+]
