@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  complaint-service:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_ENGINE=django.db.backends.mysql
+      - DB_NAME=cfmp-complaint
+      - DB_USER=root
+      - DB_PASSWORD=xzw2qwQ~
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DEBUG=True
+      - SECRET_KEY=your-secret-key-here
+    depends_on:
+      - db
+    networks:
+      - complaint-network
+    volumes:
+      - .:/app  # 开发环境挂载源代码目录
+      - static_volume:/app/staticfiles
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: xzw2qwQ~
+      MYSQL_DATABASE: cfmp-complaint
+      MYSQL_USER: complaint_user
+      MYSQL_PASSWORD: complaint_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/conf:/etc/mysql/conf.d
+    networks:
+      - complaint-network
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+
+volumes:
+  mysql_data:
+  static_volume:
+
+networks:
+  complaint-network:
+    driver: bridge
