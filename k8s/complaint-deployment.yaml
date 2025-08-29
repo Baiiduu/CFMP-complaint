@@ -89,6 +89,8 @@ spec:
           value: "xzw2qwQ~"
         - name: MYSQL_DATABASE
           value: "cfmp-complaint"
+        - name: MYSQL_ROOT_HOST      # 添加这一行
+          value: "%"                 # 允许 root 从任何主机连接
         ports:
         - containerPort: 3306
         volumeMounts:
