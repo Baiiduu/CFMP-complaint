@@ -46,7 +46,7 @@ jobs:
           DB_HOST: localhost
           DB_PORT: 3306
         run: |
-          python manage.py test
+          python ./complaint-service/manage.py test
           
 
   build:  #构建+部署
