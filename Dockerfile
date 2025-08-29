@@ -17,6 +17,11 @@ ENV DEBIAN_FRONTEND=noninteractive
 # pkg-config: 编译时查找库的工具
 # 替换原来的RUN apt-get部分为以下内容
 # 使用阿里云的Debian源，加速国内访问
+
+
+RUN rm -rf /etc/apt/sources.list.d/* && \
+    rm -f /etc/apt/sources.list \
+
 RUN echo "deb http://mirrors.aliyun.com/debian/ bookworm main non-free contrib" > /etc/apt/sources.list && \
     echo "deb-src http://mirrors.aliyun.com/debian/ bookworm main non-free contrib" >> /etc/apt/sources.list && \
     echo "deb http://mirrors.aliyun.com/debian-security/ bookworm-security main" >> /etc/apt/sources.list && \
