@@ -15,7 +15,7 @@ export KUBECTL="k3s kubectl"
 docker save complaint-service:latest > complaint-service.tar
 
 echo "将镜像导入 K3s..."
-sudo k3s ctr images import complaint-service.tar
+k3s ctr images import complaint-service.tar
 
 # 部署应用
 echo "部署应用..."
