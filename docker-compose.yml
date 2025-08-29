@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   complaint-service:
-    build: .
+    build: complaint-service
     ports:
       - "8000:8000"
     environment:
@@ -28,8 +28,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: xzw2qwQ~
       MYSQL_DATABASE: cfmp-complaint
-      MYSQL_USER: complaint_user
-      MYSQL_PASSWORD: complaint_password
+      # MYSQL_USER: complaint_user
+      # MYSQL_PASSWORD: complaint_password
     ports:
       - "3306:3306"
     volumes:

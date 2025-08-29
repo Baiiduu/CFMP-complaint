@@ -15,7 +15,19 @@ ENV DEBIAN_FRONTEND=noninteractive
 # libffi-dev 和 libssl-dev: 加密和外部函数接口相关库
 # python3-dev: Python开发头文件
 # pkg-config: 编译时查找库的工具
-RUN apt-get update && apt-get install -y \
+# 替换原来的RUN apt-get部分为以下内容
+# 使用阿里云的Debian源，加速国内访问
+RUN echo "deb http://mirrors.aliyun.com/debian/ bookworm main non-free contrib" > /etc/apt/sources.list && \
+    echo "deb-src http://mirrors.aliyun.com/debian/ bookworm main non-free contrib" >> /etc/apt/sources.list && \
+    echo "deb http://mirrors.aliyun.com/debian-security/ bookworm-security main" >> /etc/apt/sources.list && \
+    echo "deb-src http://mirrors.aliyun.com/debian-security/ bookworm-security main" >> /etc/apt/sources.list && \
+    echo "deb http://mirrors.aliyun.com/debian/ bookworm-updates main non-free contrib" >> /etc/apt/sources.list && \
+    echo "deb-src http://mirrors.aliyun.com/debian/ bookworm-updates main non-free contrib" >> /etc/apt/sources.list
+
+# 分开执行update和install，更容易排查问题
+RUN apt-get update -y
+
+RUN apt-get install -y \
     build-essential \
     libmariadb-dev-compat \
     libmariadb-dev \
@@ -46,7 +58,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # 拷贝项目源代码到容器中
 # 这一步放在安装依赖之后，因为代码变更频率高于依赖变更
-COPY . .
+COPY complaint-service .
 
 # 收集静态文件到staticfiles目录
 # 这是Django生产环境的标准做法
