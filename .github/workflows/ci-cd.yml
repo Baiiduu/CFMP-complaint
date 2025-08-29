@@ -6,7 +6,50 @@ on:
     branches: [master]
 
 jobs:
-  build:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: xzw2qwQ~
+          MYSQL_DATABASE: cfmp-complaint-test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+            python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests
+        env:
+          DB_ENGINE: django.db.backends.mysql
+          DB_NAME: cfmp-complaint-test
+          DB_USER: root
+          DB_PASSWORD: xzw2qwQ~
+          DB_HOST: localhost
+          DB_PORT: 3306
+        run: |
+          python manage.py test
+          
+
+  build:  #构建+部署
     runs-on: ubuntu-latest
 
     steps:
@@ -37,7 +80,10 @@ jobs:
             rm /tmp/cfmp-deploy.tar.gz &&
 
             rm -rf frontend.tar backend.tar
+          
 
           chmod +x start-k8s.sh
+          
           ./start-k8s.sh
           "
+        
