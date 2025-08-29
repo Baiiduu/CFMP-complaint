@@ -22,9 +22,10 @@ class IsAdminUser(permissions.BasePermission):
         user_id = request.META.get('HTTP_X_USER_UUID')
         if not user_id:
             return False
-
+        print("用户ID:", user_id)
         try:
             user_result = ServiceClient.get("UserService", f"/api/users/{user_id}")
+            print("用户9999999999999999", user_result)
             if user_result["success"]:
                 user_data = user_result["data"]
                 return user_data.get("privilege", 0) == 1
