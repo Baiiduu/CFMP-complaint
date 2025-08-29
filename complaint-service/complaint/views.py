@@ -47,7 +47,7 @@ class ComplaintView(StandartView):
 
 
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['complainer_id','target_id','target_type','status','complainer_id']
+    filterset_fields = ['complaint_id','target_id','target_type','status','complainer_id']
     ordering_fields = ['created_at']
 
     @action(methods=['patch'], detail=False, url_path='branch/(?P<target_type>\w+)/(?P<target_id>\d+)', url_name='branch')
