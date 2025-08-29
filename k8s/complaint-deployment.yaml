@@ -109,16 +109,12 @@ spec:
         readinessProbe:
           exec:
             command:
-            - mysql
-            - -h
-            - localhost
-            - -u
-            - root
-            - -p${MYSQL_ROOT_PASSWORD}
-            - -e
-            - SELECT 1
-          initialDelaySeconds: 5
-          periodSeconds: 2
+              - sh
+              - -c
+              - "mysql -h 127.0.0.1 -u root -p${MYSQL_ROOT_PASSWORD} -e 'SELECT 1'"
+          initialDelaySeconds: 30
+          periodSeconds: 5
+
       volumes:
       - name: mysql-storage
         emptyDir: {}
