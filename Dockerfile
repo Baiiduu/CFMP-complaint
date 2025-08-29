@@ -20,7 +20,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 
 RUN rm -rf /etc/apt/sources.list.d/* && \
-    rm -f /etc/apt/sources.list \
+    rm -f /etc/apt/sources.list
 
 ADD sources.list /etc/apt/
 # 分开执行update和install，更容易排查问题
