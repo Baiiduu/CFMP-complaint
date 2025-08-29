@@ -1,14 +1,21 @@
-from rest_framework import viewsets, filters
-from rest_framework.decorators import action
+import django_filters
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.views.generic import CreateView
+from rest_framework.decorators import api_view, action
+from rest_framework import generics, mixins, viewsets, filters, status
+from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from . import models, serializers, filters as complaint_filters
-from .permissions import IsAuthenticated, IsAdminUser, IsComplaintOwner
-from .service_client import ServiceClient
-import logging
+from . import models
+from . import serializers
+from rest_framework.views import APIView
+from .permissions import IsAdminUser
 
 
-logger = logging.getLogger(__name__)
+
+
 class StandardPagination(PageNumberPagination):
     page_size = 10
     page_size_query_param = 'page_size'
@@ -39,7 +46,7 @@ class ComplaintView(StandartView):
     pagination_class = StandardPagination
 
 
-    filter_backends = [DjangoFilterBackend,filters.OrderingFilter]
+    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['complainer_id','target_id','target_type','status','complainer_id']
     ordering_fields = ['created_at']
 
@@ -71,7 +78,7 @@ class ComplaintReviewView(StandartView):
     pagination_class = StandardPagination
 
     # filter_class = ComplaintReviewFilter
-    filter_backends = [DjangoFilterBackend,filters.OrderingFilter]
+    filter_backends = [DjangoFilterBackend]
     filterset_fields = ['target_id', 'target_type','reviewer_id']
     ordering_fields = ['created_at']
 
@@ -80,7 +87,6 @@ class ComplaintReviewView(StandartView):
 class TransactionViewSet(viewsets.ModelViewSet):
     queryset = models.Transaction.objects.all()
     serializer_class = serializers.TransactionSerializer
-    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    filterset_class = complaint_filters.TransactionFilter
+    filter_backends = [DjangoFilterBackend]
     ordering_fields = ['created_at']
     lookup_field = 'log_id'
