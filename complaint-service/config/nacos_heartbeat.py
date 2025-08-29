@@ -1,3 +1,5 @@
+import logging
+
 import nacos
 import socket
 import threading
@@ -11,7 +13,7 @@ USERNAME = "nacos"
 PASSWORD = "no5groupnacos"
 SERVICE_NAME = "ComplaintService"
 
-
+logging.getLogger('nacos').setLevel(logging.WARNING)
 def get_port_from_args(default=8000):
     for arg in sys.argv:
         if ":" in arg:
