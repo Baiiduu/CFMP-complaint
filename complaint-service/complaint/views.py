@@ -39,7 +39,7 @@ class StandartView(viewsets.ModelViewSet):
         return Response({'data': update.data})
 
 class ComplaintView(StandartView):
-    permission_classes = [IsAdminUser]
+
     queryset = models.Complaint.objects.all()
     serializer_class = serializers.ComplaintSerializer
     lookup_field = 'complaint_id'
@@ -71,7 +71,7 @@ class ComplaintView(StandartView):
 
 
 class ComplaintReviewView(StandartView):
-    permission_classes = [IsAdminUser]
+
     queryset = models.ComplaintReview.objects.all()
     serializer_class = serializers.ComplaintReviewSerializer
     lookup_field = 'review_id'
