@@ -17,6 +17,11 @@ docker save complaint-service:latest > complaint-service.tar
 echo "将镜像导入 K3s..."
 k3s ctr images import complaint-service.tar
 
+
+docker save mysql:8.0 > mysql.tar
+echo "将镜像导入 K3s..."
+k3s ctr images import mysql.tar
+
 # 部署应用
 echo "部署应用..."
 $KUBECTL delete -f k8s/ --ignore-not-found=true 2>/dev/null || true
