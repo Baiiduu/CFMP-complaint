@@ -10,7 +10,7 @@ echo "启动 CFMP Kubernetes 应用..."
 echo "构建投诉服务镜像..."
 docker build -t complaint-service .
 
-export KUBECTL="sudo k3s kubectl"
+export KUBECTL="k3s kubectl"
 
 docker save complaint-service:latest > complaint-service.tar
 
