@@ -4,8 +4,8 @@ from rest_framework.routers import DefaultRouter
 from complaint import views
 
 router = DefaultRouter()
-router.register(r'complaints', views.ComplaintViewSet)
-router.register(r'reviews', views.ComplaintReviewViewSet)
+router.register(r'complaints', views.ComplaintView)
+router.register(r'reviews', views.ComplaintReviewView)
 router.register(r'transactions', views.TransactionViewSet)
 
 urlpatterns = [
