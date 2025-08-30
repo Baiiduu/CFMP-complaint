@@ -18,7 +18,7 @@ echo "将镜像导入 K3s..."
 k3s ctr images import complaint-service.tar
 
 
-# docker save mysql:8.0 > mysql.tar
+ docker save mysql:8.0 > mysql.tar
 echo "将镜像导入 K3s..."
 k3s ctr images import mysql.tar
 
