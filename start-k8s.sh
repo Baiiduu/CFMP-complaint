@@ -33,6 +33,12 @@ echo "等待应用启动..."
 $KUBECTL wait --for=condition=ready pod -l app=complaint-service --timeout=300s 2>/dev/null || true
 $KUBECTL wait --for=condition=ready pod -l app=complaint-db --timeout=300s 2>/dev/null || true
 
+sleep 10
+
+until $KUBECTL exec deployment/complaint-db -- mysqladmin ping -h localhost -u root -p'xzw2qwQ~' --silent; do
+    echo "等待数据库连接..."
+    sleep 5
+done
 # 运行数据库迁移
 echo "运行数据库迁移..."
 $KUBECTL exec deployment/complaint-service -- python manager.py migrate
