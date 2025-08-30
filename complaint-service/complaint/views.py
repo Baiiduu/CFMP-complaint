@@ -12,6 +12,7 @@ from . import models
 from . import serializers
 from rest_framework.views import APIView
 from .permissions import IsAdminUser
+from .service_client import ServiceClient
 
 
 
@@ -24,6 +25,11 @@ class StandardPagination(PageNumberPagination):
 class StandartView(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         list = super().list(request, *args, **kwargs)
+
+        user_result = ServiceClient.post("UserService", f"/api/v1/auth/login-with-password/",json={"password":12312,"email":"21312312@qqcom"})
+        print("用户9999999999999999")
+        print(user_result)
+
         return Response({'data': list.data})
 
     def retrieve(self, request, *args, **kwargs):#带路径参数的查询#123
