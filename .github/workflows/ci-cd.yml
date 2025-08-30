@@ -72,8 +72,8 @@ jobs:
 
       - name: Deploy to Aliyun
         run: |
-          sshpass -p ${{secrets.ECS_PASSWORD}} scp -o StrictHostKeyChecking=no cfmp-deploy.tar.gz root@${{secrets.ECS_IP}}:/tmp/
-          sshpass -p ${{secrets.ECS_PASSWORD}} ssh -o StrictHostKeyChecking=no root@${{secrets.ECS_IP}} "
+          sshpass -p ${{secrets.ECS2_PASSWORD}} scp -o StrictHostKeyChecking=no cfmp-deploy.tar.gz root@${{secrets.ECS2_IP}}:/tmp/
+          sshpass -p ${{secrets.ECS2_PASSWORD}} ssh -o StrictHostKeyChecking=no root@${{secrets.ECS2_IP}} "
             mkdir -p ~/Complaint &&
             cd ~/Complaint &&
             tar -xzf /tmp/cfmp-deploy.tar.gz &&
