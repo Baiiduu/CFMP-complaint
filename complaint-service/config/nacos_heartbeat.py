@@ -44,7 +44,7 @@ def get_host_ip():
     except Exception:
         return "127.0.0.1"
 
-IP = get_host_ip() # 替换为您的公网IP
+IP = "101.132.163.45" # 替换为您的公网IP
 
 
 def register_service():
