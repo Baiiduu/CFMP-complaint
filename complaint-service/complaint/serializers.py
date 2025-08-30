@@ -15,7 +15,7 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Transaction
         fields = '__all__'
-
+# 1
 
 # 用于响应的复合序列化器
 class ComplaintDetailSerializer(serializers.ModelSerializer):
