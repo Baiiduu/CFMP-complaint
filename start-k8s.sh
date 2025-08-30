@@ -18,7 +18,7 @@ echo "将镜像导入 K3s..."
 k3s ctr images import complaint-service.tar
 
 
- docker save mysql:8.0 > mysql.tar
+docker save mysql:8.0 > mysql.tar
 echo "将镜像导入 K3s..."
 k3s ctr images import mysql.tar
 
@@ -41,7 +41,7 @@ until $KUBECTL exec deployment/complaint-db -- mysqladmin ping -h localhost -u r
 done
 # 运行数据库迁移
 echo "运行数据库迁移..."
-$KUBECTL exec deployment/complaint-service -- python manager.py migrate
+$KUBECTL exec deployment/complaint-service -- python manage.py migrate
 
 # 显示访问地址
 echo ""
