@@ -26,7 +26,7 @@ class StandartView(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         list = super().list(request, *args, **kwargs)
 
-        user_result = ServiceClient.post("UserService", f"/api/v1/auth/login-with-password/",json={"password":12312,"email":"21312312@qqcom"})
+        user_result = ServiceClient.get("OrderService", f"/api/orders/")
         print("用户9999999999999999")
         print(user_result)
 
