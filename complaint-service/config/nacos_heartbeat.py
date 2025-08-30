@@ -14,7 +14,7 @@ PASSWORD = "no5groupnacos"
 SERVICE_NAME = "ComplaintService"
 
 logging.getLogger('nacos').setLevel(logging.WARNING)
-def get_port_from_args(default=8000):
+def get_port_from_args(default=30008):
     for arg in sys.argv:
         if ":" in arg:
             try:
@@ -23,7 +23,7 @@ def get_port_from_args(default=8000):
                 pass
     return default
 
-PORT = get_port_from_args()
+PORT = 30008
 
 client = nacos.NacosClient(
     SERVER_ADDRESSES,
