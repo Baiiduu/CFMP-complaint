@@ -61,7 +61,7 @@ COPY complaint-service .
 
 # 收集静态文件到staticfiles目录
 # 这是Django生产环境的标准做法
-RUN python manager.py collectstatic --noinput --clear
+RUN python manage.py collectstatic --noinput --clear
 
 # 创建普通用户，避免以root身份运行应用（安全最佳实践）
 RUN adduser --disabled-password --gecos '' appuser && chown -R appuser:appuser /app
