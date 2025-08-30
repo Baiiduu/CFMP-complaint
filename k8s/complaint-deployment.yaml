@@ -38,6 +38,10 @@ spec:
           value: "True"
         - name: SECRET_KEY
           value: "123"
+        - name: NODE_IP
+          value: "101.132.163.45"
+        - name: NODE_PORT
+          value: "30008"
 
 ---
 apiVersion: v1

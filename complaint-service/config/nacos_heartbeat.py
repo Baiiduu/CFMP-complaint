@@ -1,4 +1,5 @@
 import logging
+import random
 
 import nacos
 import socket
@@ -14,16 +15,11 @@ PASSWORD = "no5groupnacos"
 SERVICE_NAME = "ComplaintService"
 
 logging.getLogger('nacos').setLevel(logging.WARNING)
-def get_port_from_args(default=30008):
-    for arg in sys.argv:
-        if ":" in arg:
-            try:
-                return int(arg.split(":")[1])
-            except ValueError:
-                pass
-    return default
 
-PORT = 30008
+#随机生成30000到32767的随机端口
+
+
+PORT = os.getenv("NODE_PORT", random.randint(30000, 32767))
 
 client = nacos.NacosClient(
     SERVER_ADDRESSES,
@@ -44,7 +40,7 @@ def get_host_ip():
     except Exception:
         return "127.0.0.1"
 
-IP = "101.132.163.45" # 替换为您的公网IP
+IP = os.getenv("NODE_IP", "101.132.163.45") # 替换为您的公网IP
 
 
 def register_service():
