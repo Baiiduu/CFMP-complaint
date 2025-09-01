@@ -66,7 +66,6 @@ DATABASES = {
             'read_timeout': 30,  # 读取超时时间（秒）
             'write_timeout': 30,  # 写入超时时间（秒）
             # MySQL连接器特定的重试参数
-            'conn_max_age': 300,  # 连接最大存活时间
             'autocommit': True,
         },
     }
