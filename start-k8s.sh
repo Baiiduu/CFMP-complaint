@@ -27,7 +27,7 @@ k3s ctr images import mysql.tar
 echo "部署应用..."
 $KUBECTL delete -f k8s/ --ignore-not-found=true 2>/dev/null || true
 sleep 3
-$KUBECTL apply -f k8s/complaint-deployment.yaml
+$KUBECTL apply -f k8s/
 
 # 等待启动
 echo "等待应用启动..."
@@ -58,14 +58,11 @@ if [ $attempt -eq $max_attempts ]; then
 fi
 
 # 等待几秒钟确保数据库完全可用
-sleep 10
+sleep 30
 
 # 运行数据库迁移
 echo "运行数据库迁移..."
-#$KUBECTL exec deployment/complaint-service -- python manage.py makemigrations
 $KUBECTL exec deployment/complaint-service -- python manage.py migrate
-
-#$KUBECTL apply -f k8s/hpa.yaml
 
 # 显示访问地址
 echo ""

@@ -23,7 +23,7 @@ class ComplaintReview(models.Model):
        投诉审核模型
     """
     review_id = models.BigAutoField(primary_key=True)
-    target_id = models.UUIDField(default="0")   # 被举报对象ID
+    target_id = models.UUIDField(default="0")  # 被举报对象ID
     target_type = models.SmallIntegerField(default=0)  # 被举报对象类型
     reviewer_id = models.UUIDField()  # 审核员ID  User
     created_at = models.DateTimeField(auto_now_add=True)  # 审核时间

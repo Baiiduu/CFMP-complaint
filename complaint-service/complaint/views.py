@@ -73,30 +73,6 @@ class ComplaintView(StandartView):
 
         return Response(status=status.HTTP_202_ACCEPTED)
 
-class ComplaintUserView(StandartView):
-    queryset = models.Complaint.objects.all()
-    serializer_class = serializers.ComplaintSerializer
-
-    def create(self, request, *args, **kwargs):
-        complainer_id=request.META.get('HTTP_X_USER_UUID')
-        complaint_data = request.data
-
-        # 创建 Complaint 实例但不保存到数据库
-        complaint = models.Complaint(
-            target_type=complaint_data.get('target_type'),
-            target_id=complaint_data.get('target_id'),
-            reason=complaint_data.get('reason'),
-            complainer_id=complainer_id
-        )
-
-        # 手动保存到数据库
-        complaint.save()
-        serializer = self.get_serializer(complaint)
-
-        return Response({
-            'data': serializer.data
-        }, status=status.HTTP_201_CREATED)
-
 
 
 

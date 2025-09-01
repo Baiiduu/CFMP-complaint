@@ -6,4 +6,3 @@ gunicorn>=20.1.0
 python-dotenv>=1.0.0
 nacos-sdk-python>=0.1.9
 httpx>=0.23.0
-requests>=2.25.0
