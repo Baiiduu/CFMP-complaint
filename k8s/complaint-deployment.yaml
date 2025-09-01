@@ -38,7 +38,7 @@ spec:
         - name: DB_PASSWORD
           value: "xzw2qwQ~"
         - name: DB_HOST
-          value: "complaint-db-service"
+          value: "complaint-db"
         - name: DB_PORT
           value: "3306"
         - name: DEBUG
@@ -106,7 +106,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: complaint-db-service
+  name: complaint-db
 spec:
   selector:
     app: complaint-db
