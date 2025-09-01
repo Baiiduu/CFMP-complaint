@@ -69,7 +69,28 @@ fi
        sleep 10
    done
 # 等待几秒钟确保数据库完全可用
-sleep 30
+
+# 添加应用连接失败重试机制
+echo "验证应用与数据库的连接..."
+max_app_attempts=15
+app_attempt=0
+while [ $app_attempt -lt $max_app_attempts ]; do
+    if $KUBECTL exec deployment/complaint-service -- python manage.py shell -c "from django.db import connection; connection.ensure_connection()" >/dev/null 2>&1; then
+        echo "应用成功连接到数据库"
+        break
+    fi
+    echo "应用连接数据库失败，等待重试... ($((app_attempt+1))/$max_app_attempts)"
+    app_attempt=$((app_attempt+1))
+    sleep 10
+done
+
+if [ $app_attempt -eq $max_app_attempts ]; then
+    echo "错误: 应用无法连接到数据库"
+    $KUBECTL logs deployment/complaint-service
+    exit 1
+fi
+
+sleep 10
 
 # 运行数据库迁移
 echo "运行数据库迁移..."

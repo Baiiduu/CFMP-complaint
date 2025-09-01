@@ -62,6 +62,12 @@ DATABASES = {
         'PORT': os.environ.get('DB_PORT', '3306'),
         'OPTIONS': {
             'init_command': "SET SESSION binlog_format = 'ROW'",
+            'connect_timeout': 30,  # 连接超时时间（秒）
+            'read_timeout': 30,  # 读取超时时间（秒）
+            'write_timeout': 30,  # 写入超时时间（秒）
+            # MySQL连接器特定的重试参数
+            'conn_max_age': 300,  # 连接最大存活时间
+            'autocommit': True,
         },
     }
 }
