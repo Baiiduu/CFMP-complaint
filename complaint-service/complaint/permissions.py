@@ -7,7 +7,7 @@ class IsAuthenticated(permissions.BasePermission):
 
     def has_permission(self, request, view):
         # 检查是否通过网关认证（检查请求头中的用户信息）
-        user_id = request.META.get('HTTP_X_USER_UUID')
+        user_id = request.headers.get('UUID')
         return user_id is not None
 
 class IsAdminUser(permissions.BasePermission):
@@ -19,7 +19,7 @@ class IsAdminUser(permissions.BasePermission):
         # 检查用户是否是认证用户，并且其 privilege 等于 1
         from .service_client import ServiceClient
 
-        user_id = request.META.get('HTTP_X_USER_UUID')
+        user_id = request.headers.get('UUID')
         if not user_id:
             return False
         print("用户ID:", user_id)
@@ -41,7 +41,7 @@ class IsComplaintOwner(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         from .service_client import ServiceClient
         # 管理员可以访问所有对象
-        user_id = request.META.get('HTTP_X_USER_UUID')
+        user_id = request.headers.get('UUID')
         if not user_id:
             return False
 
@@ -72,5 +72,5 @@ class IsComplaintOwner(permissions.BasePermission):
 
     def has_permission(self, request, view):
         # 基本认证检查
-        user_id = request.META.get('HTTP_X_USER_UUID')
+        user_id = request.headers.get('UUID')
         return user_id is not None

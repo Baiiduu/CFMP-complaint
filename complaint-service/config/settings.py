@@ -60,6 +60,7 @@ DATABASES = {
         'PASSWORD': os.environ.get('DB_PASSWORD', '123456'),
         'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': os.environ.get('DB_PORT', '3306'),
+        'CONN_MAX_AGE': 60,
         'OPTIONS': {
             'init_command': "SET SESSION binlog_format = 'ROW'",
             'connect_timeout': 30,  # 连接超时时间（秒）
@@ -67,6 +68,7 @@ DATABASES = {
             'write_timeout': 30,  # 写入超时时间（秒）
             # MySQL连接器特定的重试参数
             'autocommit': True,
+            'sql_mode': 'STRICT_TRANS_TABLES',
         },
     }
 }
