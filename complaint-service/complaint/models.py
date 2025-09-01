@@ -7,9 +7,9 @@ class Complaint(models.Model):
     complaint_id = models.BigAutoField(primary_key=True)
     # 注意：在微服务中，我们不再直接引用其他服务的模型
     # 而是存储关联对象的ID
-    complainer_id = models.BigIntegerField()  # 举报用户ID
+    complainer_id = models.UUIDField()  # 举报用户ID
     target_type = models.SmallIntegerField()  # 举报目标类型: 0-商品, 1-用户
-    target_id = models.BigIntegerField()  # 被举报对象ID  User
+    target_id = models.UUIDField()  # 被举报对象ID  User
     reason = models.TextField()  # 举报原因
     created_at = models.DateTimeField(auto_now_add=True)  # 创建时间
     status = models.SmallIntegerField(default=0)  # 状态: 0-待处理, 1-已处理
@@ -23,9 +23,9 @@ class ComplaintReview(models.Model):
        投诉审核模型
     """
     review_id = models.BigAutoField(primary_key=True)
-    target_id = models.BigIntegerField(default=0)  # 被举报对象ID
+    target_id = models.UUIDField(default="0")   # 被举报对象ID
     target_type = models.SmallIntegerField(default=0)  # 被举报对象类型
-    reviewer_id = models.BigIntegerField()  # 审核员ID  User
+    reviewer_id = models.UUIDField()  # 审核员ID  User
     created_at = models.DateTimeField(auto_now_add=True)  # 审核时间
     result = models.CharField(max_length=100)  # 审核结果
     ban_type = models.CharField(max_length=100)  # 封禁类型

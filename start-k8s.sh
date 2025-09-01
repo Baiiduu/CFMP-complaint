@@ -62,9 +62,10 @@ sleep 30
 
 # 运行数据库迁移
 echo "运行数据库迁移..."
+$KUBECTL exec deployment/complaint-service -- python manage.py makemigrations
 $KUBECTL exec deployment/complaint-service -- python manage.py migrate
 
-$KUBECTL apply -f k8s/hpa.yaml
+#$KUBECTL apply -f k8s/hpa.yaml
 
 # 显示访问地址
 echo ""

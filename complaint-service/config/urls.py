@@ -11,8 +11,5 @@ router.register(r'complaints/create',views.ComplaintUserView,basename='complaint
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-
-
     # 可以添加自定义路径
-
 ]
