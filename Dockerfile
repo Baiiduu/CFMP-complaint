@@ -76,4 +76,4 @@ EXPOSE 8000
 # --bind 0.0.0.0:8000: 绑定到所有网络接口的8000端口
 # --workers 3: 使用3个工作进程处理请求
 # config.wsgi:application: 指定WSGI应用入口
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "config.wsgi:application"]
+CMD ["python","manage.py","runserver", "0.0.0.0:8000"]
