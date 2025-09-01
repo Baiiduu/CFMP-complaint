@@ -78,7 +78,7 @@ class ComplaintUserView(StandartView):
     serializer_class = serializers.ComplaintSerializer
 
     def create(self, request, *args, **kwargs):
-        complainer_id=request.META.get('HTTP-X-USER-UUID')
+        complainer_id=request.META.get('HTTP_X_USER_UUID')
         complaint_data = request.data
 
         # 创建 Complaint 实例但不保存到数据库
