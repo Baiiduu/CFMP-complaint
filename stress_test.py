@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # stress_test.py
+# coding=utf-8
 import requests
 import threading
 import time
