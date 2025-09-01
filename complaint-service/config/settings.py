@@ -57,7 +57,7 @@ DATABASES = {
         'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.mysql'),
         'NAME': os.environ.get('DB_NAME', 'cfmp-complaint'),
         'USER': os.environ.get('DB_USER', 'root'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'xzw2qwQ~'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', '123456'),
         'HOST': os.environ.get('DB_HOST', 'localhost'),
         'PORT': os.environ.get('DB_PORT', '3306'),
         'OPTIONS': {
