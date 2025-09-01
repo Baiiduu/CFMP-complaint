@@ -57,6 +57,17 @@ if [ $attempt -eq $max_attempts ]; then
     exit 1
 fi
 
+  max_app_attempts=10
+   app_attempt=0
+   while [ $app_attempt -lt $max_app_attempts ]; do
+       if $KUBECTL exec deployment/complaint-service -- python manage.py shell -c "from django.db import connection; connection.ensure_connection()"; then
+           echo "应用数据库连接成功"
+           break
+       fi
+       echo "等待应用连接数据库... ($((app_attempt+1))/$max_app_attempts)"
+       app_attempt=$((app_attempt+1))
+       sleep 10
+   done
 # 等待几秒钟确保数据库完全可用
 sleep 30
 
