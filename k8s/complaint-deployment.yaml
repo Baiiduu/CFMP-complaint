@@ -1,4 +1,4 @@
-# k8s/complaint-deployment.yaml
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -21,15 +21,22 @@ spec:
         imagePullPolicy: Never  # 在 CI/CD 中会被更新
         ports:
         - containerPort: 8000
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
         env:
         - name: DB_ENGINE
           value: "django.db.backends.mysql"
         - name: DB_NAME
-          value: "cfmp-complaint"
+          value: "cfmp-user"
         - name: DB_USER
           value: "root"
         - name: DB_PASSWORD
-          value: "xzw2qwQ~"
+          value: "123456"
         - name: DB_HOST
           value: "complaint-db-service"
         - name: DB_PORT
@@ -38,17 +45,11 @@ spec:
           value: "True"
         - name: SECRET_KEY
           value: "123"
-        - name: NODE_IP
-          value: "101.132.163.45"
         - name: NODE_PORT
           value: "30008"
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "250m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
+        - name: NODE_IP
+          value: "101.132.163.45"
+
 
 ---
 apiVersion: v1
@@ -64,8 +65,9 @@ spec:
     - protocol: TCP
       port: 8000
       targetPort: 8000
-      nodePort: 30008
+      nodePort: 30009
   type: NodePort
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -87,7 +89,7 @@ spec:
 
         env:
         - name: MYSQL_ROOT_PASSWORD
-          value: "xzw2qwQ~"
+          value: "123456"
         - name: MYSQL_DATABASE
           value: "cfmp-complaint"
         - name: MYSQL_ROOT_HOST      # 添加这一行
@@ -97,14 +99,26 @@ spec:
         volumeMounts:
         - name: mysql-storage
           mountPath: /var/lib/mysql
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "250m"
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-
+        livenessProbe:
+          exec:
+            command:
+            - mysqladmin
+            - ping
+            - -h
+            - localhost
+            - -u
+            - root
+            - -p${MYSQL_ROOT_PASSWORD}
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+              - sh
+              - -c
+              - "mysql -h 127.0.0.1 -u root -p${MYSQL_ROOT_PASSWORD} -e 'SELECT 1'"
+          initialDelaySeconds: 30
+          periodSeconds: 5
 
       volumes:
       - name: mysql-storage
@@ -114,8 +128,6 @@ apiVersion: v1
 kind: Service
 metadata:
   name: complaint-db-service
-  labels:
-      app: complaint-db
 spec:
   selector:
     app: complaint-db
