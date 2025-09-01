@@ -61,6 +61,16 @@ sleep 10
 echo "运行数据库迁移..."
 $KUBECTL exec deployment/complaint-service -- python manage.py migrate
 
+
+# 应用HPA配置
+echo "应用HPA配置..."
+$KUBECTL apply -f k8s/hpa.yaml
+
+# 等待HPA准备就绪
+echo "等待HPA准备就绪..."
+$KUBECTL wait --for=condition=established hpa/complaint-service-hpa --timeout=60s 2>/dev/null || true
+
+
 # 显示访问地址
 echo ""
 echo "部署完成！访问地址："
