@@ -66,5 +66,12 @@ echo ""
 echo "部署完成！访问地址："
 echo "服务端口: 30080 (NodePort)"
 echo ""
+
+
+sleep 5
+
+$KUBECTL delete pods -l app=complaint-service
+
+
 $KUBECTL get pods
 $KUBECTL get services
