@@ -58,7 +58,7 @@ if [ $attempt -eq $max_attempts ]; then
 fi
 
 # 等待几秒钟确保数据库完全可用
-sleep 30
+sleep 10
 
 # 运行数据库迁移
 echo "运行数据库迁移..."
