@@ -35,7 +35,7 @@ max_attempts=30
 attempt=0
 
 while [ $attempt -lt $max_attempts ]; do
-    if $KUBECTL exec deployment/complaint-db -- mysqladmin ping -h localhost -u root -p'xzw2qwQ~' --silent >/dev/null 2>&1; then
+    if $KUBECTL exec deployment/complaint-db -- mysqladmin ping -h localhost -u root -p'123456' --silent >/dev/null 2>&1; then
         echo "数据库已准备就绪"
         break
     fi
