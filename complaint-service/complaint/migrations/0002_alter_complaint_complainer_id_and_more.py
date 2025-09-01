@@ -28,6 +28,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='complaintreview',
             name='target_id',
-            field=models.UUIDField(default='0'),
+            field=models.UUIDField(),
         ),
     ]
