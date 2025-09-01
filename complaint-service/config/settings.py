@@ -58,7 +58,7 @@ DATABASES = {
         'NAME': os.environ.get('DB_NAME', 'cfmp-complaint'),
         'USER': os.environ.get('DB_USER', 'root'),
         'PASSWORD': os.environ.get('DB_PASSWORD', 'xzw2qwQ~'),
-        'HOST': os.environ.get('DB_HOST', 'complaint-db'),
+        'HOST': os.environ.get('DB_HOST', 'complaint-db-service'),
         'PORT': os.environ.get('DB_PORT', '3306'),
         'OPTIONS': {
             'init_command': "SET SESSION binlog_format = 'ROW'",

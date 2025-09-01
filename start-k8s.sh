@@ -27,7 +27,7 @@ k3s ctr images import mysql.tar
 echo "部署应用..."
 $KUBECTL delete -f k8s/ --ignore-not-found=true 2>/dev/null || true
 sleep 3
-$KUBECTL apply -f k8s/
+$KUBECTL apply -f k8s/complaint-deployment.yaml
 
 # 等待启动
 echo "等待应用启动..."
