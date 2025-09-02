@@ -7,6 +7,7 @@ router = DefaultRouter()
 router.register(r'complaints', views.ComplaintView)
 router.register(r'reviews', views.ComplaintReviewView)
 router.register(r'transactions', views.TransactionViewSet)
+router.register(r'complaints/create',views.ComplaintUserView,basename='complaint-create')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
