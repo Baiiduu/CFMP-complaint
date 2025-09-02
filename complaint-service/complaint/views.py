@@ -50,6 +50,7 @@ class ComplaintView(StandartView):
     serializer_class = serializers.ComplaintSerializer
     lookup_field = 'complaint_id'
     pagination_class = StandardPagination
+    permission_classes = [IsAdminUser]
 
 
     filter_backends = [DjangoFilterBackend]

@@ -28,6 +28,7 @@ client = nacos.NacosClient(
     password=PASSWORD
 )
 
+
 # 获取本机 IP
 def get_host_ip():
     try:
@@ -52,6 +53,20 @@ def register_service():
         cluster_name="DEFAULT"
     )
     print(f"已注册到 Nacos: {SERVICE_NAME} {IP}:{PORT}")
+
+def deregister_service():
+    """从Nacos注销服务实例"""
+    try:
+        client.remove_naming_instance(
+            service_name=SERVICE_NAME,
+            ip=IP,
+            port=PORT,
+            cluster_name="DEFAULT"
+        )
+        print(f"已从Nacos注销: {SERVICE_NAME} {IP}:{PORT}")
+    except Exception as e:
+        print(f"服务注销失败: {e}")
+
 
 def send_heartbeat():
     while True:
