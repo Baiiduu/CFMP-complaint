@@ -107,11 +107,41 @@ class ComplaintReviewView(StandartView):
     serializer_class = serializers.ComplaintReviewSerializer
     lookup_field = 'review_id'
     pagination_class = StandardPagination
+    # permission_classes = [IsAdminUser]
+
 
     # filter_class = ComplaintReviewFilter
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['target_id', 'target_type','reviewer_id']
     ordering_fields = ['created_at']
+
+    def create(self, request, *args, **kwargs):
+        # 从请求头获取审核员ID
+        reviewer_id = request.headers.get('UUID')
+        if not reviewer_id:
+            return Response({
+                'detail': '缺少审核员ID (UUID header)'
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        # 从请求体获取数据
+        review_data = request.data
+        # 创建 ComplaintReview 实例
+        review = models.ComplaintReview(
+            target_id=review_data.get('target_id'),
+            target_type=review_data.get('target_type'),
+            reviewer_id=reviewer_id,
+            result=review_data.get('result'),
+            ban_type=review_data.get('ban_type'),
+            ban_time=review_data.get('ban_time')
+        )
+
+        # 保存到数据库
+        review.save()
+        serializer = self.get_serializer(review)
+
+        return Response({
+            'data': serializer.data
+        }, status=status.HTTP_201_CREATED)
 
 
 
