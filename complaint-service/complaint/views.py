@@ -26,9 +26,9 @@ class StandartView(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         list = super().list(request, *args, **kwargs)
 
-        user_result = ServiceClient.get("OrderService", f"/api/orders/")
-        print("用户9999999999999999")
-        print(user_result)
+       # user_result = ServiceClient.get("OrderService", f"/api/orders/")
+       # print("用户9999999999999999")
+       # print(user_result)
 
         return Response({'data': list.data})
 
@@ -78,6 +78,7 @@ class ComplaintView(StandartView):
 class ComplaintUserView(StandartView):
     queryset = models.Complaint.objects.all()
     serializer_class = serializers.ComplaintSerializer
+    permission_classes = []
 
     def create(self, request, *args, **kwargs):
         complainer_id=request.headers.get('UUID')
