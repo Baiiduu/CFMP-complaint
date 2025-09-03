@@ -50,7 +50,7 @@ class ComplaintView(StandartView):
     serializer_class = serializers.ComplaintSerializer
     lookup_field = 'complaint_id'
     pagination_class = StandardPagination
-    # permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
 
 
     filter_backends = [DjangoFilterBackend]
@@ -98,7 +98,7 @@ class ComplaintUserView(StandartView):
 
         return Response({
             'data': serializer.data
-        }, status=status.HTTP_201_CREATED)
+        }, status=status.HTTP_200_CREATED)
 
 
 class ComplaintReviewView(StandartView):
@@ -107,7 +107,7 @@ class ComplaintReviewView(StandartView):
     serializer_class = serializers.ComplaintReviewSerializer
     lookup_field = 'review_id'
     pagination_class = StandardPagination
-    # permission_classes = [IsAdminUser]
+    permission_classes = [IsAdminUser]
 
 
     # filter_class = ComplaintReviewFilter
@@ -141,7 +141,7 @@ class ComplaintReviewView(StandartView):
 
         return Response({
             'data': serializer.data
-        }, status=status.HTTP_201_CREATED)
+        }, status=status.HTTP_200_CREATED)
 
 
 
