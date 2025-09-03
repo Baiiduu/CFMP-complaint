@@ -12,7 +12,7 @@ router.register(r'transactions', views.TransactionViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/root/', include(router.urls)),
+    path('api/', include(router.urls)),
     # 可以添加自定义路径
 
 ]
