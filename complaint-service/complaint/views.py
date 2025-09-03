@@ -57,7 +57,7 @@ class ComplaintView(StandartView):
     filterset_fields = ['complaint_id','target_id','target_type','status','complainer_id']
     ordering_fields = ['created_at']
 
-    @action(methods=['patch'], detail=False, url_path='branch/(?P<target_type>\w+)/(?P<target_id>\d+)', url_name='branch')
+    @action(methods=['patch'], detail=False, url_path='branch/(?P<target_type>\w+)/(?P<target_id>[^/]+)', url_name='branch')
     def branch_update(self, request,target_type, target_id):
         queryset = self.get_queryset().filter(
             target_type=target_type,
@@ -151,3 +151,5 @@ class TransactionViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     ordering_fields = ['created_at']
     lookup_field = 'log_id'
+
+
