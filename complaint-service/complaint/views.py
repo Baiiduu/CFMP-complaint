@@ -98,7 +98,7 @@ class ComplaintUserView(StandartView):
 
         return Response({
             'data': serializer.data
-        }, status=status.HTTP_200_CREATED)
+        }, status=status.HTTP_201_CREATED)
 
 
 class ComplaintReviewView(StandartView):
@@ -141,7 +141,7 @@ class ComplaintReviewView(StandartView):
 
         return Response({
             'data': serializer.data
-        }, status=status.HTTP_200_CREATED)
+        }, status=status.HTTP_201_CREATED)
 
 
 
