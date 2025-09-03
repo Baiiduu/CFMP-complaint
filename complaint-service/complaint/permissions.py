@@ -24,7 +24,7 @@ class IsAdminUser(permissions.BasePermission):
             return False
         print("用户ID:", user_id)
         try:
-            user_result = ServiceClient.get("UserService", f"/api/user/{user_id}")
+            user_result = ServiceClient.get("UserService", f"/api/v1/user/{user_id}")
             print("用户9999999999999999", user_result)
             if user_result["success"]:
                 user_data = user_result["data"]
@@ -47,7 +47,7 @@ class IsComplaintOwner(permissions.BasePermission):
 
         # 首先检查是否为管理员
         try:
-            user_result = ServiceClient.get("UserService", f"/api/user/{user_id}")
+            user_result = ServiceClient.get("UserService", f"/api/v1/user/{user_id}")
             if user_result["success"]:
                 user_data = user_result["data"]
                 # 如果是管理员，允许访问
